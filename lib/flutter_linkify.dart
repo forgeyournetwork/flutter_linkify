@@ -40,6 +40,9 @@ class Linkify extends StatelessWidget {
   /// Style of link text
   final TextStyle? linkStyle;
 
+  /// Style of link text
+  final Map<String, TextStyle?>? linkStyles;
+
   // Text.rich
 
   /// How the text should be aligned horizontally.
@@ -82,6 +85,7 @@ class Linkify extends StatelessWidget {
     // TextSpan
     this.style,
     this.linkStyle,
+    this.linkStyles,
     // RichText
     this.textAlign = TextAlign.start,
     this.textDirection,
@@ -118,6 +122,7 @@ class Linkify extends StatelessWidget {
               decoration: TextDecoration.underline,
             )
             .merge(linkStyle),
+        linkStyles: linkStyles,
       ),
       textAlign: textAlign,
       textDirection: textDirection,
@@ -157,6 +162,9 @@ class SelectableLinkify extends StatelessWidget {
 
   /// Style of link text
   final TextStyle? linkStyle;
+
+  /// Style of link text
+  final Map<String, TextStyle?>? linkStyles;
 
   // Text.rich
 
@@ -234,6 +242,7 @@ class SelectableLinkify extends StatelessWidget {
     // TextSpan
     this.style,
     this.linkStyle,
+    this.linkStyles,
     // RichText
     this.textAlign,
     this.textDirection,
@@ -282,6 +291,7 @@ class SelectableLinkify extends StatelessWidget {
               decoration: TextDecoration.underline,
             )
             .merge(linkStyle),
+        linkStyles: linkStyles,
       ),
       textAlign: textAlign,
       textDirection: textDirection,
@@ -327,6 +337,7 @@ class LinkableSpan extends WidgetSpan {
 TextSpan buildTextSpan(
   List<LinkifyElement> elements, {
   TextStyle? style,
+  Map<String, TextStyle?>? linkStyles,
   TextStyle? linkStyle,
   LinkCallback? onOpen,
   bool useMouseRegion = false,
@@ -340,15 +351,23 @@ TextSpan buildTextSpan(
               mouseCursor: SystemMouseCursors.click,
               inlineSpan: TextSpan(
                 text: element.text,
-                style: linkStyle,
-                recognizer: onOpen != null ? (TapGestureRecognizer()..onTap = () => onOpen(element)) : null,
+                style: linkStyles != null
+                    ? linkStyles[element.runtimeType.toString()] ?? linkStyle
+                    : linkStyle,
+                recognizer: onOpen != null
+                    ? (TapGestureRecognizer()..onTap = () => onOpen(element))
+                    : null,
               ),
             );
           } else {
             return TextSpan(
               text: element.text,
-              style: linkStyle,
-              recognizer: onOpen != null ? (TapGestureRecognizer()..onTap = () => onOpen(element)) : null,
+              style: linkStyles != null
+                  ? linkStyles[element.runtimeType.toString()] ?? linkStyle
+                  : linkStyle,
+              recognizer: onOpen != null
+                  ? (TapGestureRecognizer()..onTap = () => onOpen(element))
+                  : null,
             );
           }
         } else {
