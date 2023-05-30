@@ -76,6 +76,8 @@ class Linkify extends StatelessWidget {
   /// Defines how the paragraph will apply TextStyle.height to the ascent of the first line and descent of the last line.
   final TextHeightBehavior? textHeightBehavior;
 
+  final bool useMouseRegion;
+
   const Linkify({
     Key? key,
     required this.text,
@@ -97,6 +99,7 @@ class Linkify extends StatelessWidget {
     this.locale,
     this.textWidthBasis = TextWidthBasis.parent,
     this.textHeightBehavior,
+    this.useMouseRegion = false,
   }) : super(key: key);
 
   @override
@@ -112,7 +115,7 @@ class Linkify extends StatelessWidget {
         elements,
         style: Theme.of(context).textTheme.bodyText2?.merge(style),
         onOpen: onOpen,
-        useMouseRegion: true,
+        useMouseRegion: useMouseRegion,
         linkStyle: Theme.of(context)
             .textTheme
             .bodyText2
