@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:linkify/linkify.dart';
 
 export 'package:linkify/linkify.dart'
@@ -113,12 +112,12 @@ class Linkify extends StatelessWidget {
     return Text.rich(
       buildTextSpan(
         elements,
-        style: Theme.of(context).textTheme.bodyText2?.merge(style),
+        style: Theme.of(context).textTheme.bodyMedium?.merge(style),
         onOpen: onOpen,
         useMouseRegion: useMouseRegion,
         linkStyle: Theme.of(context)
             .textTheme
-            .bodyText2
+            .bodyMedium
             ?.merge(style)
             .copyWith(
               color: Colors.blueAccent,
@@ -131,7 +130,7 @@ class Linkify extends StatelessWidget {
       textDirection: textDirection,
       maxLines: maxLines,
       overflow: overflow,
-      textScaleFactor: textScaleFactor,
+      textScaler: TextScaler.linear(textScaleFactor),
       softWrap: softWrap,
       strutStyle: strutStyle,
       locale: locale,
@@ -201,7 +200,7 @@ class SelectableLinkify extends StatelessWidget {
   final bool autofocus;
 
   /// Configuration of toolbar options
-  final ToolbarOptions? toolbarOptions;
+  final Widget Function(BuildContext, EditableTextState)? contextMenuBuilder;
 
   /// How thick the cursor will be
   final double cursorWidth;
@@ -257,7 +256,7 @@ class SelectableLinkify extends StatelessWidget {
     this.strutStyle,
     this.showCursor = false,
     this.autofocus = false,
-    this.toolbarOptions,
+    this.contextMenuBuilder,
     this.cursorWidth = 2.0,
     this.cursorRadius,
     this.cursorColor,
@@ -283,11 +282,11 @@ class SelectableLinkify extends StatelessWidget {
     return SelectableText.rich(
       buildTextSpan(
         elements,
-        style: Theme.of(context).textTheme.bodyText2?.merge(style),
+        style: Theme.of(context).textTheme.bodyMedium?.merge(style),
         onOpen: onOpen,
         linkStyle: Theme.of(context)
             .textTheme
-            .bodyText2
+            .bodyMedium
             ?.merge(style)
             .copyWith(
               color: Colors.blueAccent,
@@ -303,9 +302,9 @@ class SelectableLinkify extends StatelessWidget {
       focusNode: focusNode,
       strutStyle: strutStyle,
       showCursor: showCursor,
-      textScaleFactor: textScaleFactor,
+      textScaler: TextScaler.linear(textScaleFactor),
       autofocus: autofocus,
-      toolbarOptions: toolbarOptions,
+      contextMenuBuilder: contextMenuBuilder,
       cursorWidth: cursorWidth,
       cursorRadius: cursorRadius,
       cursorColor: cursorColor,

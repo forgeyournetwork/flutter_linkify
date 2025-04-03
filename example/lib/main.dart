@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'dart:async';
 
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 void main() => runApp(LinkifyExample());
 
@@ -23,14 +23,14 @@ class LinkifyExample extends StatelessWidget {
               child: Linkify(
                 onOpen: _onOpen,
                 textScaleFactor: 2,
-                text: "Made by https://cretezy.com\n\nMail: example@gmail.com",
+                text: 'Made by https://cretezy.com\n\nMail: example@gmail.com',
               ),
             ),
             Center(
               child: SelectableLinkify(
                 onOpen: _onOpen,
                 textScaleFactor: 4,
-                text: "Made by https://cretezy.com\n\nMail: example@gmail.com",
+                text: 'Made by https://cretezy.com\n\nMail: example@gmail.com',
               ),
             ),
           ],
@@ -40,8 +40,8 @@ class LinkifyExample extends StatelessWidget {
   }
 
   Future<void> _onOpen(LinkableElement link) async {
-    if (await canLaunch(link.url)) {
-      await launch(link.url);
+    if (await canLaunchUrlString(link.url)) {
+      await launchUrlString(link.url);
     } else {
       throw 'Could not launch $link';
     }
